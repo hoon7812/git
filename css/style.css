@@ -184,4 +184,25 @@ div {
 
 .btn-danger {
   background: red;
+}
+
+.box_group {
+  width: 980px;
+}
+.box_group .box1 {
+  width: 81.6666666667px;
+}
+.box_group .box2 {
+  width: 653.3333333333px;
+}
+.box_group .box3 {
+  width: 245px;
+}
+
+div {
+  color: rgb(213, 0, 0);
+}
+
+div {
+  width: 555px;
 }/*# sourceMappingURL=style.css.map */
