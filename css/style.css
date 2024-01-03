@@ -8,7 +8,7 @@ body {
   padding: 0;
 }
 
-.btn {
+.btn, .btn-danger {
   padding: 0.5rem 1rem;
   display: inline-block;
   border: 1px solid gray;
@@ -17,10 +17,10 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.btn.sm {
+.btn.sm, .sm.btn-danger {
   font-size: 0.8rem;
 }
-.btn.lg {
+.btn.lg, .lg.btn-danger {
   font-size: 1.3rem;
 }
 
@@ -168,4 +168,20 @@ body {
 .icon2::after {
   content: "/images/icon.png";
   position: absolute;
+}
+
+div {
+  color: red;
+  background-color: blue;
+  border-color: blue;
+}
+
+.btn, .btn-danger {
+  padding: 10px;
+  margin: 10px;
+  background: blue;
+}
+
+.btn-danger {
+  background: red;
 }/*# sourceMappingURL=style.css.map */
