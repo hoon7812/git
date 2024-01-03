@@ -9,6 +9,8 @@ $family: unquote("Droid+Sans");
 
 @import "header";
 
+
+
 // 1. 변수 선언, 변수 사용 가능
 $white: #fff;
 $colors: (
@@ -237,6 +239,9 @@ body {
     @include position(fixed, $t: 30px, $r: 40px);
 }
 
+
+
+
 // 인수를 순서대로 하나씩 전달 받다가, 3번째 매개변수($bg-values)는 인수의 개수에 상관없이 받음
 @mixin bg($width, $height, $bg-values...) {
     width: $width;
@@ -254,6 +259,8 @@ body {
         url("/images/c.png")
     );
 }
+
+
 
 @mixin font($style: normal, $weight: normal, $size: 16px, $family: sans-serif) {
     font: {
@@ -281,6 +288,8 @@ body {
     @include font((weight: 900, family: monospace)...);
 }
 
+
+
 // @content는 직접 스타일 추가 가능
 @mixin icon($url) {
     &::after {
@@ -296,6 +305,5 @@ body {
     // icon Mixin에 스타일 블록을 추가하여 사용
     @include icon("/images/icon.png") {
         position: absolute;
-        left: 0;
     }
 }
