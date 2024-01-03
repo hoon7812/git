@@ -1,0 +1,301 @@
+$family: unquote("Droid+Sans");
+@import url("http://fonts.googleapis.com/css?family=#{$family}");
+
+// @import "header.css";
+// @import "http://hello.com/hello";
+// @import url(hello);
+// @import "hello" screen;
+// @import "header", "footer"; //여러 파일
+
+@import "header";
+
+// 1. 변수 선언, 변수 사용 가능
+$white: #fff;
+$colors: (
+    red: #e03131,
+    orange: #ff922b,
+    yellow: #ffd43b,
+    green: #69db7c,
+    blue: #74c0fc,
+    indigo: #3b5bdb,
+    purple: #7048e8,
+    gray: #ced4da
+);
+$lineWidth: 500px;
+$backColorBar: #00b3ff;
+$backColorIcon: #c5eeff;
+$iconSize: 38px;
+$iconMargin: 12px;
+$topGrid: 60px;
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+// 2. 중첩 기능을 이용하여 편리하게 사용 가능
+.btn {
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border: 1px solid gray;
+    background-color: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+
+    // size
+    &.sm {
+        font-size: 0.8rem;
+    }
+    &.lg {
+        font-size: 1.3rem;
+    }
+}
+
+// 3. 스타일 반복 가능
+// @each $name, $color in $colors {
+//     &.#{""+$name} {
+//         background-color: #{$color};
+//         color: white;
+//         border: none;
+//     }
+//     &.line-#{""+$name} {
+//         border: 1px solid #{$color};
+//     }
+//     &.color-#{""+$name} {
+//         color: #{$color};
+//     }
+// }
+
+// 4. 스타일 재사용, 함수처럼 사용 가능
+@mixin box($display, $padding, $margin, $border) {
+    display: $display;
+    padding: $padding;
+    margin: $margin;
+    border: $border;
+}
+
+@mixin btn($padding, $color, $margin, $border) {
+    padding: $padding;
+    color: $color;
+    margin: $margin;
+    border: $border;
+}
+
+@mixin createSquare($size, $bgcolor) {
+    $calculated: 32px * $size;
+    width: $calculated;
+    height: $calculated;
+    background-color: $bgcolor;
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+.fs {
+    &-small {
+        font-size: 12px;
+    }
+    &-medium {
+        font-size: 14px;
+    }
+    &-large {
+        font-size: 16px;
+    }
+}
+
+.list {
+    $w: 100px;
+    $h: 50px;
+    li {
+        width: $w;
+        height: $h;
+    }
+    @at-root .box {
+        width: $w;
+        height: $h;
+    }
+}
+
+.box {
+    @include border-radius(10px);
+    font: {
+        weight: bold;
+        size: 10px;
+        family: sans-serif;
+    }
+    margin: {
+        top: 10px;
+        left: 20px;
+    }
+    padding: {
+        bottom: 40px;
+        right: 30px;
+    }
+}
+
+.box-2 {
+    $color-primary: #e96900;
+    $url_images: "/assets/images/";
+    $w: 200px;
+
+    width: $w;
+    height: $w;
+    background: $color-primary url($url_images + "bg.jpg");
+    margin: {
+        left: $w;
+    }
+}
+
+.box-3 {
+    $red: #ff0000;
+    $blue: #0000ff;
+    $color-primary-02: $blue;
+    $color-danger: $red;
+    $w: 50px;
+
+    width: $w;
+    height: $w;
+    color: $color-primary-02;
+    background: $color-danger;
+}
+
+.example {
+    @include box(flex, 10px 20px, 10px 20px, 1px solid red);
+    & > a {
+        @include btn(10px 20px, red, 10px, 1px solid blue);
+        &:first-child {
+            color: pink;
+        }
+        &:hover {
+            background-color: #74c0fc;
+        }
+    }
+}
+
+.square {
+    @include createSquare(10, lightgray);
+}
+
+//변수 전역설정
+.box1 {
+    $color_b: #111 !global;
+    background: $color_b;
+}
+.box2 {
+    background: $color_b;
+}
+
+@mixin large-text {
+    font: {
+        size: 22px;
+        weight: bold;
+        family: sans-serif;
+    }
+    color: orange;
+    &::after {
+        content: "!!";
+    }
+
+    span.icon {
+        background: url("/images/icon.png");
+    }
+}
+
+.large {
+    @include large-text;
+}
+
+@mixin border-line($width, $color) {
+    border: $width solid $color;
+}
+
+.box11 {
+    @include border-line(1px, red);
+}
+.box22 {
+    @include border-line(4px, blue);
+}
+
+@mixin position($p: absolute, $t: null, $b: null, $l: null, $r: null) {
+    position: $p;
+    top: $t;
+    bottom: $b;
+    left: $l;
+    right: $r;
+}
+
+.absolute {
+    // 키워드 인수로 설정할 값만 전달
+    @include position($b: 10px, $r: 20px);
+}
+.fixed {
+    @include position(fixed, $t: 30px, $r: 40px);
+}
+
+// 인수를 순서대로 하나씩 전달 받다가, 3번째 매개변수($bg-values)는 인수의 개수에 상관없이 받음
+@mixin bg($width, $height, $bg-values...) {
+    width: $width;
+    height: $height;
+    background: $bg-values;
+}
+
+.bg_test {
+    // 위의 Mixin(bg) 설정에 맞게 인수를 순서대로 전달하다가 3번째 이후부터는 개수에 상관없이 전달
+    @include bg(
+        100px,
+        200px,
+        url("/images/a.png") no-repeat 10px 20px,
+        url("/images/b.png") no-repeat,
+        url("/images/c.png")
+    );
+}
+
+@mixin font($style: normal, $weight: normal, $size: 16px, $family: sans-serif) {
+    font: {
+        style: $style;
+        weight: $weight;
+        size: $size;
+        family: $family;
+    }
+}
+.font_test {
+    // 매개변수 순서와 개수에 맞게 전달
+    $font-values: italic, bold, 16px, sans-serif;
+    @include font($font-values...);
+}
+.font_test span {
+    // 필요한 값만 키워드 인수로 변수에 담아 전달
+    $font-values: (
+        style: italic,
+        size: 22px
+    );
+    @include font($font-values...);
+}
+.font_test a {
+    // 필요한 값만 키워드 인수로 전달
+    @include font((weight: 900, family: monospace)...);
+}
+
+// @content는 직접 스타일 추가 가능
+@mixin icon($url) {
+    &::after {
+        content: $url;
+        @content;
+    }
+}
+.icon1 {
+    // icon Mixin의 기존 기능만 사용
+    @include icon("/images/icon.png");
+}
+.icon2 {
+    // icon Mixin에 스타일 블록을 추가하여 사용
+    @include icon("/images/icon.png") {
+        position: absolute;
+        left: 0;
+    }
+}
